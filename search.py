@@ -91,8 +91,69 @@ def depthFirstSearch(problem):
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
+    """
+    begin
+    open. = [Start];
+    closed: = [];
+    while open != [] do
+        begin
+            remove leftmost state from open, call it X 
+            if X is a goal then return SUCCESS
+                else begin
+                    generate children of X
+                    put X on closed;
+                    discard children of X if already on open or closed
+                    put remaining children on right end of open
+                end
+            end
+        return FAIL
+    end.
+    """
+
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    open = util.Queue()
+    close = []
+
+    initialNode = (problem.getStartState(), [], 0)
+    open.push(initialNode)
+
+    presentState, allocate, actionCost = open.pop()
+
+    while not open.isEmpty():
+        if problem.isGoalState(presentState):    #if problem.isGoalState(presentState):    #if presentState is problem.isGoalState():
+            return allocate
+        else:
+            close.append(presentState)
+            children = problem.getSuccessors(presentState) 
+            close.add(presentState)  
+            if presentState not in close:   #fix this 
+                for next_state,action,cost in children:
+                    open.push((next_state,allocate+[action],actionCost+cost))
+                    close.append(next_state)  
+        presentState, allocate, actionCost = open.pop()
+    
+    # return allocate
+
+    # fringe=util.Queue()
+    # visited_states=[state]  #close
+    # fringe.push((problem.getStartState(),[],0)) #state, total actions, total cost
+    # state,allactions,allcost=fringe.pop()
+
+    # while (not problem.isGoalState(state)):  
+    #   successors=problem.getSuccessors(state)
+    #   for next_state,action,cost in successors:   #FIGURE OUT HOW TO DO THIS AHHHHHHHHHHH
+    #     if (not next_state in visited_states):
+    #       fringe.push((next_state,allactions+[action],allcost+cost))
+    #       visited_states.append(next_state)
+    #   state,allactions,allcost=fringe.pop()
+    # return  allactions
+
+    # print("Start:", problem.getStartState())
+    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))    
+
+    # util.raiseNotDefined()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
