@@ -92,6 +92,7 @@ def depthFirstSearch(problem):
 
     initialNode = (problem.getStartState(), [], 0)
     _open.push(initialNode)
+    
     while not _open.isEmpty():
         presentState, allocate, actionCost = _open.pop()
         _close.append(presentState)                           # adds the starting node so it doesnt loop back
@@ -106,24 +107,6 @@ def depthFirstSearch(problem):
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    """
-    begin
-        open. = [Start];
-        closed: = [];
-        while open != [] do
-            begin
-                remove leftmost state from open, call it X 
-                    if X is a goal then return SUCCESS
-                        else begin
-                            generate children of X
-                            put X on closed;
-                            discard children of X if already on open or closed
-                            put remaining children on right end of open
-                        end
-            end
-        return FAIL
-    end.
-    """
     "*** YOUR CODE HERE ***"
     _open = util.Queue()
     _close = []
@@ -143,24 +126,6 @@ def breadthFirstSearch(problem):
                   _open.push((nextState, allocate+[nextAllocate], actionCost+nextCost))
                   _close.append(nextState)
     return allocate             # not needed
-
-    # _open = util.Queue()
-    # _close = []
-
-    # initialNode = (problem.getStartState(), [], 0)
-    # _open.push(initialNode)
-
-    # presentState, allocate, actionCost = _open.pop()
-    # _close.append(presentState)                             # adds the starting node so it doesnt loop back
-
-    # while not problem.isGoalState(presentState):
-    #     children = problem.getSuccessors(presentState) 
-    #     for nextState,nextAllocate,nextCost in children:    # loops through all possible conecting nodes
-    #         if (not nextState in _close):                   # if the node has already been traversed skip
-    #             _open.push((nextState, allocate+[nextAllocate], actionCost+nextCost))
-    #             _close.append(nextState)
-    #     presentState, allocate, actionCost = _open.pop()    
-    # return allocate
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
